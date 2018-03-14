@@ -1,0 +1,10 @@
+# IntelliJ IDEA #
+#################
+.idea/
+*.iml
+*.iws
+
+# Java compiled #
+#################
+*.class
+
