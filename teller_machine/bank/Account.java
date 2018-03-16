@@ -8,7 +8,6 @@ import java.util.Map;
 
 public class Account {
     private BigDecimal balance;
-    //public static Map<Account,Card> cardDB = new HashMap<>();
 
     Account(BigDecimal balance) {
         this.balance = balance;

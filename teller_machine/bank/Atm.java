@@ -11,9 +11,7 @@ public class Atm {
         if (currentCard == null) {
             System.out.println("Вставьте карту");
         } else {
-            //System.out.println("Balance: " + currentCard.getBalance().setScale(2).toString());
             System.out.println("Balance: " + currentCard.getAccount().getBalance().setScale(2).toString());
-
         }
     }
 

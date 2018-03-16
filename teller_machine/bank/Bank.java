@@ -21,7 +21,6 @@ public class Bank {
     private void addAccount(Client client, BigDecimal bigDecimal) {
         Account account = new Account(bigDecimal);
         accForClientsDB.put(client, account);
-
     }
 
     public Card getCardOfClient(Client client) {

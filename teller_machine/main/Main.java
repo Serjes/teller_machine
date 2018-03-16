@@ -14,7 +14,6 @@ public class Main {
         Bank bank = new Bank();
         bank.issueCard(client, new VisaCard(), new BigDecimal(1000));
 
-        //Atm atm = new Atm();
         Atm atm = bank.getAtm();
         Card currentCard = bank.getCardOfClient(client);
         System.out.printf("Владелец карты: %s\n",client);
