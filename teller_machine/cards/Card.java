@@ -7,7 +7,15 @@ import java.math.BigDecimal;
 public abstract class Card {
     private Account account;
 
-//    private BigDecimal balance;
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    //    private BigDecimal balance;
 //
 //    public Card() {
 //        balance = new BigDecimal(1000.0);

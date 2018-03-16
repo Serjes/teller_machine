@@ -12,12 +12,15 @@ public class Atm {
             System.out.println("Вставьте карту");
         } else {
             //System.out.println("Balance: " + currentCard.getBalance().setScale(2).toString());
+            System.out.println("Balance: " + currentCard.getAccount().getBalance().setScale(2).toString());
+
         }
     }
 
     public void insertCard(Card card) {
         if (currentCard == null) {
             currentCard = card;
+            //System.out.printf("Вставили карту, %s \n", card.getAccount());
             System.out.println("Вставили карту");
         } else {
             System.out.println("Уже вставлена карта");

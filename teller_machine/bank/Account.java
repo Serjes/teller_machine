@@ -1,15 +1,20 @@
 package teller_machine.bank;
 
+import teller_machine.cards.Card;
+
 import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Account {
     private BigDecimal balance;
+    //public static Map<Account,Card> cardDB = new HashMap<>();
 
-    public Account(BigDecimal balance) {
+    Account(BigDecimal balance) {
         this.balance = balance;
     }
 
-    public BigDecimal getBalance() {
+    BigDecimal getBalance() {
         return balance;
     }
 
