@@ -15,6 +15,9 @@ public abstract class Card {
         this.account = account;
     }
 
+    public void withdraw(BigDecimal amount){
+        account.withdraw(amount);
+    }
     //    private BigDecimal balance;
 //
 //    public Card() {

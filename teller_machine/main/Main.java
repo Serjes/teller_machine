@@ -1,6 +1,5 @@
 package teller_machine.main;
 
-import teller_machine.bank.Account;
 import teller_machine.bank.Atm;
 import teller_machine.bank.Bank;
 import teller_machine.bank.Client;
@@ -14,7 +13,6 @@ public class Main {
         Client client = new Client("Иванов", "Василий");
         Bank bank = new Bank();
         bank.issueCard(client, new VisaCard(), new BigDecimal(1000));
-        //bank.addAccount(client);
 
         //Atm atm = new Atm();
         Atm atm = bank.getAtm();
@@ -23,12 +21,11 @@ public class Main {
         atm.insertCard(currentCard);
         atm.showBalance();
 
-        //atm.withdraw(new BigDecimal(100));
-//        atm.withdraw(new BigDecimal(2000));
-//        atm.showBalance();
-//        atm.eject();
-
-
+        System.out.println("Снимем 100");
+        atm.withdraw(new BigDecimal(100));
+        //atm.withdraw(new BigDecimal(2000));
+        atm.showBalance();
+        atm.eject();
         //сделать меню для действий: вставить карту, баланс , снять
         //разнести по пакетам +
         //банк со счетами --это 2 класса

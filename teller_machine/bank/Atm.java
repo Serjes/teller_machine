@@ -20,7 +20,6 @@ public class Atm {
     public void insertCard(Card card) {
         if (currentCard == null) {
             currentCard = card;
-            //System.out.printf("Вставили карту, %s \n", card.getAccount());
             System.out.println("Вставили карту");
         } else {
             System.out.println("Уже вставлена карта");
@@ -28,7 +27,7 @@ public class Atm {
     }
 
     public void withdraw(BigDecimal amount) {
-        //currentCard.withdraw(amount);
+        currentCard.withdraw(amount);
     }
 
     public void eject() {
