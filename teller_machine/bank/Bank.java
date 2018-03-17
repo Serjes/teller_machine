@@ -3,10 +3,7 @@ package teller_machine.bank;
 import teller_machine.cards.Card;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class Bank {
     private Set<Client> clientsDB = new HashSet<>();
@@ -28,12 +25,18 @@ public class Bank {
         return card;
     }
 
-    public void issueCard(Client client, Card card, BigDecimal bigDecimal, int pin) {
+    public void issueCard(Client client, Card card, BigDecimal bigDecimal, int pin, int cvv) {
         clientsDB.add(client);
         addAccount(client, bigDecimal);
         cardDB.put(accForClientsDB.get(client), card);
         card.setAccount(accForClientsDB.get(client));
         card.setPin(pin);
+        card.setCvv(cvv);
+        Date curDate = new Date();
+        Long time = curDate.getTime();
+        time += (60*60*24*1000);
+        curDate = new Date(time);
+        card.setValidityPeriod(curDate);
     }
 
     public void printAccounts(){

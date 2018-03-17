@@ -21,9 +21,7 @@ public class Atm {
                 scanner.nextLine();
             }
         }
-        if (currentCard.checkPin(pin)) {
-            return true;
-        }
+        if (currentCard.checkPin(pin)) return true;
         return false;
     }
 
