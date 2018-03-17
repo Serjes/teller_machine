@@ -28,11 +28,12 @@ public class Bank {
         return card;
     }
 
-    public void issueCard(Client client, Card card, BigDecimal bigDecimal) {
+    public void issueCard(Client client, Card card, BigDecimal bigDecimal, int pin) {
         clientsDB.add(client);
         addAccount(client, bigDecimal);
         cardDB.put(accForClientsDB.get(client), card);
         card.setAccount(accForClientsDB.get(client));
+        card.setPin(pin);
     }
 
     public void printAccounts(){

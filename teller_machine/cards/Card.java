@@ -5,8 +5,9 @@ import teller_machine.bank.Account;
 import java.math.BigDecimal;
 
 public abstract class Card {
-    private Account account;
     String description;
+    private Account account;
+    private int pin;
 
     public String getDescription() {
         return description;
@@ -22,5 +23,17 @@ public abstract class Card {
 
     public void withdraw(BigDecimal amount) {
         account.withdraw(amount);
+    }
+
+    public void setPin(int pin) {
+        this.pin = pin;
+    }
+
+    private int getPin() {
+        return pin;
+    }
+
+    public boolean checkPin(int pin) {
+        return (this.pin == pin) ? true : false;
     }
 }
