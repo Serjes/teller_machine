@@ -6,6 +6,11 @@ import java.math.BigDecimal;
 
 public abstract class Card {
     private Account account;
+    String description;
+
+    public String getDescription() {
+        return description;
+    }
 
     public Account getAccount() {
         return account;

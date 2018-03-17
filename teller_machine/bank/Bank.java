@@ -34,4 +34,12 @@ public class Bank {
         cardDB.put(accForClientsDB.get(client), card);
         card.setAccount(accForClientsDB.get(client));
     }
+
+    public void printAccounts(){
+        System.out.println(accForClientsDB.values());
+    }
+
+    public void printClients() {
+        System.out.println(clientsDB);
+    }
 }

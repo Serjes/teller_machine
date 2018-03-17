@@ -8,8 +8,14 @@ import java.util.Map;
 
 public class Account {
     private BigDecimal balance;
+    private long number;
+
+    private Account() {
+        number = (long)(1000000000 * Math.random());
+    }
 
     Account(BigDecimal balance) {
+        this();
         this.balance = balance;
     }
 
@@ -27,5 +33,10 @@ public class Account {
             return;
         }
         balance = balance.subtract(amount);
+    }
+
+    @Override
+    public String toString() {
+        return "" + number;
     }
 }

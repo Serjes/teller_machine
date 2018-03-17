@@ -18,17 +18,21 @@ public class Atm {
     public void insertCard(Card card) {
         if (currentCard == null) {
             currentCard = card;
-            System.out.println("Вставили карту");
+            System.out.println("Вставили карту " + card.getDescription());
         } else {
             System.out.println("Уже вставлена карта");
         }
     }
 
-    public void withdraw(BigDecimal amount) {
-        currentCard.withdraw(amount);
+    public void withdrawCash(BigDecimal amount) {
+        if (currentCard == null) {
+            System.out.println("Вставьте карту");
+        } else {
+            currentCard.withdraw(amount);
+        }
     }
 
-    public void eject() {
+    public void ejectCard() {
         if (currentCard == null) {
             System.out.println("Карта не вставлена");
         } else {
