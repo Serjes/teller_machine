@@ -20,27 +20,28 @@ public class Main {
 
         Atm atm = bank.getAtm();
         Card currentCard = bank.getCardOfClient(client);
-        //System.out.printf("Владелец карты: %s\n", client);
         atm.insertCard(currentCard);
         atm.showBalance();
-
         System.out.println("Снимем 100");
         atm.withdrawCash(new BigDecimal(100));
         //atm.withdrawCash(new BigDecimal(2000));
         atm.showBalance();
         atm.ejectCard();
+        System.out.println("");
 
         Client client2 = new Client("Сидоров", "Петр");
-        System.out.printf("Выпустим карту для клиента: %s\n", client);
+        System.out.printf("Выпустим карту для клиента: %s\n", client2);
         bank.issueCard(client2, new MasterCard(), new BigDecimal(5000), 5643, 3452);
+        System.out.println("");
         System.out.println("Выведем всех клиентов банка:");
         bank.printClients();
         System.out.println("Выведем все счета в банке:");
         bank.printAccounts();
         System.out.println("");
 
-        //класс InternetShop, принимает карты но не пин а cvv код
+        //класс InternetShop, принимает карты но не пин а cvv код и дату
         InternetShop internetShop = new InternetShop();
+        System.out.printf("Владелец карты: %s, cvv = 3819 \n", client);
         System.out.println("Оплатим в Интернет магазине покупку:");
         internetShop.payPurchase(currentCard, new BigDecimal(100));
 

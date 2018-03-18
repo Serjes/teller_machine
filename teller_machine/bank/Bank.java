@@ -33,16 +33,10 @@ public class Bank {
         card.setAccount(accForClientsDB.get(client));
         card.setPin(pin);
         card.setCvv(cvv);
-//        Date curDate = new Date();
-//        Long time = curDate.getTime();
-//        time = time + (60*60*24*1000*100);
-//        Date expDate = new Date(time);
-//        System.out.println(expDate.toString());
-//        //card.setValidityPeriod(curDate);
         Calendar calendar = Calendar.getInstance();
         calendar.roll(calendar.YEAR, 1);
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-        System.out.println("срок действия карты до " + sdf.format(calendar.getTime()));
+        System.out.println("(срок действия карты до " + sdf.format(calendar.getTime()) + ")");
         card.setExpDate(calendar);
     }
 

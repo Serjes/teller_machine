@@ -28,7 +28,7 @@ public class Atm {
     public void insertCard(Card card) {
         if (currentCard == null) {
             currentCard = card;
-            System.out.println("Вставили карту " + card.getDescription() + ", account: " + card.getAccount());
+            System.out.println("ATM: Вставили карту " + card.getDescription() + ", account: " + card.getAccount());
         } else {
             System.out.println("Уже вставлена карта");
         }
@@ -37,12 +37,12 @@ public class Atm {
     public void showBalance() {
         System.out.println("ATM: Проверка баланса");
         if (currentCard == null) {
-            System.out.println("Ошибка, вставьте карту");
+            System.out.println("ATM: Ошибка, вставьте карту");
         } else {
             if (checkPin()) {
-                System.out.println("Balance: " + currentCard.getAccount().getBalance().setScale(2).toString());
+                System.out.println("ATM: Balance: " + currentCard.getAccount().getBalance().setScale(2).toString());
             } else {
-                System.out.println("Неверный pin");
+                System.out.println("ATM: Неверный pin");
             }
 
         }
@@ -51,12 +51,12 @@ public class Atm {
     public void withdrawCash(BigDecimal amount) {
         System.out.println("ATM: Снятие наличных");
         if (currentCard == null) {
-            System.out.println("Ошибка, вставьте карту");
+            System.out.println("ATM: Ошибка, вставьте карту");
         } else {
             if (checkPin()) {
                 currentCard.withdraw(amount);
             } else {
-                System.out.println("Неверный pin");
+                System.out.println("ATM: Неверный pin");
             }
         }
     }
@@ -64,10 +64,10 @@ public class Atm {
     public void ejectCard() {
         System.out.println("ATM: Извлечение карты");
         if (currentCard == null) {
-            System.out.println("Карта не вставлена");
+            System.out.println("ATM: Карта не вставлена");
         } else {
             currentCard = null;
-            System.out.println("Карта успешно извлечена");
+            System.out.println("ATM: Карта успешно извлечена");
         }
     }
 }

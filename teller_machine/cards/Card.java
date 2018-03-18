@@ -12,8 +12,6 @@ public abstract class Card {
     private Account account;
     private int pin;
     private int cvv;
-    //private Date validityPeriod;
-    //private Date expDate;
     private Calendar expDate;
 
     public String getDescription() {
@@ -36,30 +34,15 @@ public abstract class Card {
         this.pin = pin;
     }
 
-//    public void setValidityPeriod(Date validityPeriod) {
-//        this.validityPeriod = validityPeriod;
-//    }
-//    private int getPin() {
-//        return pin;
-//    }
-
     public boolean checkPin(int pin) {
-        //return (this.pin == pin) ? true : false;
         return (this.pin == pin);
     }
 
     public boolean checkCvvAndDate(int cvv, Calendar expDate) {
         if (this.cvv != cvv) return false;
-//        Date currentDate = new Date();
-//        Long currentTime = currentDate.getTime();
-//        Long validityPeriodTime = validityPeriod.getTime();
-//        if (currentTime > validityPeriodTime) return false;
-//        return true;
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
         if (sdf.format(expDate.getTime()).equals(sdf.format(this.expDate.getTime()))) return true;
         return false;
-//        if (this.expDate != expDate) return false;
-//        return true;
     }
 
     public void setCvv(int cvv) {

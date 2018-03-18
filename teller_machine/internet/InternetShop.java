@@ -6,7 +6,6 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Scanner;
 
 public class InternetShop {
@@ -39,22 +38,11 @@ public class InternetShop {
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
         Calendar calendar = Calendar.getInstance();
         try {
-            //Date date = sdf.parse(expDateString);
             calendar.setTime(sdf.parse(expDateString));
         } catch (ParseException e) {
             e.printStackTrace();
+            return false;
         }
-        //System.out.println(sdf.format(calendar.getTime()));
-//        while (true) {
-//            if (scanner.hasNextInt()) {
-//                cvv = scanner.nextInt();
-//                break;
-//            } else {
-//                System.out.println("Неверный ввод");
-//                scanner.nextLine();
-//            }
-//        }
-        //Date date = null;
         if (!card.checkCvvAndDate(cvv, calendar)) return false;
         return true;
     }
