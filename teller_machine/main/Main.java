@@ -31,12 +31,17 @@ public class Main {
         atm.ejectCard();
 
         Client client2 = new Client("Сидоров", "Петр");
+        System.out.printf("Выпустим карту для клиента: %s\n", client);
         bank.issueCard(client2, new MasterCard(), new BigDecimal(5000), 5643, 3452);
+        System.out.println("Выведем всех клиентов банка:");
         bank.printClients();
+        System.out.println("Выведем все счета в банке:");
         bank.printAccounts();
+        System.out.println("");
 
         //класс InternetShop, принимает карты но не пин а cvv код
         InternetShop internetShop = new InternetShop();
+        System.out.println("Оплатим в Интернет магазине покупку:");
         internetShop.payPurchase(currentCard, new BigDecimal(100));
 
     }
