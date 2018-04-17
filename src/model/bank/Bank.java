@@ -44,7 +44,8 @@ public class Bank {
         System.out.println(accForClientsDB.values());
     }
 
-    public void printClients() {
-        System.out.println(clientsDB);
+    public String printClients() {
+        //System.out.println(clientsDB);
+        return clientsDB.toString();
     }
 }

@@ -7,16 +7,14 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
-            prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="view.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Controller">
    <children>
       <MenuBar layoutY="-4.0" prefHeight="31.0" prefWidth="800.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
@@ -56,11 +54,11 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <TextField GridPane.columnIndex="1" fx:id="myTextField"/>
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <TextField fx:id="surnameTextField" GridPane.columnIndex="1" />
+                              <TextField fx:id="nameTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <TextField fx:id="amountTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <TextField fx:id="pinTextField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <TextField fx:id="cvvTextField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                               <Label prefHeight="16.0" prefWidth="147.0" text="Фамилия" />
                               <Label layoutX="10.0" layoutY="18.0" prefHeight="16.0" prefWidth="147.0" text="Имя" GridPane.rowIndex="1" />
                               <Label layoutX="10.0" layoutY="51.0" prefHeight="16.0" prefWidth="147.0" text="Сумма к зачислению" GridPane.rowIndex="2" />
@@ -68,8 +66,7 @@
                               <Label layoutX="10.0" layoutY="115.0" prefHeight="16.0" prefWidth="147.0" text="CVV" GridPane.rowIndex="4" />
                            </children>
                         </GridPane>
-                        <Button layoutX="262.0" layoutY="270.0" mnemonicParsing="false" prefHeight="25.0"
-                                prefWidth="109.0" text="Выпустить карту" fx:id="myButton" onAction="#showDateTime"/>
+                        <Button fx:id="issueButton" layoutX="262.0" layoutY="270.0" mnemonicParsing="false" onAction="#issueCard" prefHeight="25.0" prefWidth="109.0" text="Выпустить карту" />
                      </children>
                   </AnchorPane>
             </content>
@@ -86,7 +83,11 @@
             </Tab>
             <Tab text="БД банка">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Button fx:id="printClientsButton" layoutX="88.0" layoutY="73.0" mnemonicParsing="false" onAction="#printClients" text="Показать клиентов банка" />
+                        <TextArea fx:id="outputTextArea" layoutX="317.0" layoutY="73.0" prefHeight="355.0" prefWidth="408.0" />
+                     </children></AnchorPane>
                </content>
             </Tab>
         </tabs>
