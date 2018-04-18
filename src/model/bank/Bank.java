@@ -26,7 +26,7 @@ public class Bank {
         return card;
     }
 
-    public void issueCard(Client client, Card card, BigDecimal bigDecimal, int pin, int cvv) {
+    public String issueCard(Client client, Card card, BigDecimal bigDecimal, int pin, int cvv) {
         clientsDB.add(client);
         addAccount(client, bigDecimal);
         cardDB.put(accForClientsDB.get(client), card);
@@ -36,8 +36,9 @@ public class Bank {
         Calendar calendar = Calendar.getInstance();
         calendar.roll(calendar.YEAR, 1);
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-        System.out.println("(срок действия карты до " + sdf.format(calendar.getTime()) + ")");
+        //System.out.println("(срок действия карты до " + sdf.format(calendar.getTime()) + ")");
         card.setExpDate(calendar);
+        return "(срок действия карты до " + sdf.format(calendar.getTime()) + ")";
     }
 
     public void printAccounts(){

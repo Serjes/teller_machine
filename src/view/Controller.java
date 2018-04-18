@@ -33,6 +33,10 @@ public class Controller {
     private TextField cvvTextField;
     @FXML
     private TextArea outputTextArea;
+    @FXML
+    private TextField resultTextField;
+    @FXML
+    private TextArea resultTextArea;
 
     public Controller() {
     }
@@ -40,11 +44,17 @@ public class Controller {
     public void issueCard(ActionEvent event) {
         Client client = new Client(surnameTextField.getText(),nameTextField.getText());
         System.out.printf("Выпустим карту для клиента: %s\n", client);
-        bank.issueCard(client, new VisaCard(), new BigDecimal(amountTextField.getText()),
+        String issueReturn = bank.issueCard(client, new VisaCard(), new BigDecimal(amountTextField.getText()),
                 Integer.parseInt(pinTextField.getText()), Integer.parseInt(cvvTextField.getText()));
-//        System.out.println("" + surnameTextField.getText() + nameTextField.getText() + amountTextField.getText()
-//                + pinTextField.getText() + cvvTextField.getText());
-//        System.out.println("" + surnameTextField.getText() + nameTextField.getText() + amountTextField.getText());
+        surnameTextField.setText("");
+        nameTextField.setText("");
+        amountTextField.setText("");
+        pinTextField.setText("");
+        cvvTextField.setText("");
+        resultTextArea.setText("Выпущена карта для клиента: \n");
+        resultTextArea.appendText(client.getSurname() + " " + client.getName() + "\n");
+        resultTextArea.appendText(issueReturn);
+
     }
 
     public void printClients(ActionEvent actionEvent) {

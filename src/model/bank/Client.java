@@ -9,6 +9,14 @@ public class Client {
         this.name = name;
     }
 
+    public String getSurname() {
+        return surname;
+    }
+
+    public String getName() {
+        return name;
+    }
+
     @Override
     public String toString() {
         return "Client{" + surname + " " + name + '}';
