@@ -2,11 +2,12 @@ package model.cards;
 
 import model.bank.Account;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public abstract class Card {
+public abstract class Card implements Serializable{
     String description;
     private Account account;
     private int pin;

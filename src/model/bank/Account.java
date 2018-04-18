@@ -1,8 +1,9 @@
 package model.bank;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class Account {
+public class Account implements Serializable{
     private BigDecimal balance;
     private long number;
 

@@ -2,10 +2,11 @@ package model.bank;
 
 import model.cards.Card;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Scanner;
 
-public class Atm {
+public class Atm implements Serializable{
     private Card currentCard;
 
     private boolean checkPin() {

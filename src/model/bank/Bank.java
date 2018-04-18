@@ -2,11 +2,12 @@ package model.bank;
 
 import model.cards.Card;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class Bank {
+public class Bank implements Serializable{
     private Set<Client> clientsDB = new HashSet<>();
     private Map<Client, Account> accForClientsDB = new HashMap<>();
     private Map<Account,Card> cardDB = new HashMap<>();
@@ -41,8 +42,9 @@ public class Bank {
         return "(срок действия карты до " + sdf.format(calendar.getTime()) + ")";
     }
 
-    public void printAccounts(){
-        System.out.println(accForClientsDB.values());
+    public String printAccounts(){
+        //System.out.println(accForClientsDB.values());
+        return accForClientsDB.values().toString();
     }
 
     public String printClients() {

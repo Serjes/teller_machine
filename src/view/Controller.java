@@ -9,6 +9,7 @@ import model.bank.Bank;
 import model.bank.Client;
 import model.cards.*;
 
+import java.io.*;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -16,11 +17,14 @@ import java.util.Date;
 
 public class Controller {
     Bank bank = new Bank();
+    File file = new File("bankDB.txt");
 
     @FXML
     private Button issueButton;
     @FXML
     private Button printClientsButton;
+    @FXML
+    private Button printAccountsButton;
     @FXML
     private TextField surnameTextField;
     @FXML
@@ -58,8 +62,14 @@ public class Controller {
     }
 
     public void printClients(ActionEvent actionEvent) {
-        outputTextArea.appendText(bank.printClients());
+        outputTextArea.appendText("\n");
+        outputTextArea.appendText(bank.printClients() + "\n");
         //outputTextArea.setText("привет!");
+    }
+
+    public void printAccounts(ActionEvent actionEvent) {
+        outputTextArea.appendText("Счета: \n");
+        outputTextArea.appendText(bank.printAccounts() + "\n");
     }
 
     public void showDateTime(ActionEvent event) {
@@ -71,5 +81,45 @@ public class Controller {
         // Show in VIEW
         //myTextField.setText(dateTimeString);
 
+    }
+
+    public void saveDB(ActionEvent event) {
+        FileOutputStream fileOutputStream = null;
+        //ObjectOutputStream os = null;
+        try {
+            fileOutputStream = new FileOutputStream(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            ObjectOutputStream oos = new ObjectOutputStream(fileOutputStream);
+            oos.writeObject(bank);
+            oos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void loadDB(ActionEvent event) {
+
+        FileInputStream fileInputStream = null;
+        try {
+            fileInputStream = new FileInputStream(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            //ObjectOutputStream os = new ObjectOutputStream(fileOutputStream);
+            ObjectInputStream ois = new ObjectInputStream(fileInputStream);
+            try {
+                Object obj = ois.readObject();
+                bank = (Bank) obj;
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            //bank = is.readObject();
+            ois.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
