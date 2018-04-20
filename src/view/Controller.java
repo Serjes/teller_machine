@@ -6,6 +6,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import model.bank.Atm;
 import model.bank.Bank;
 import model.bank.Client;
 import model.cards.*;
@@ -18,6 +19,7 @@ import java.util.Date;
 
 public class Controller {
     Bank bank = new Bank();
+    Atm atm = bank.getAtm();
     File file = new File("bankDB.txt");
 
     @FXML
@@ -100,59 +102,29 @@ public class Controller {
     }
 
     public void saveDB(ActionEvent event) {
-//        FileOutputStream fileOutputStream = null;
-        //ObjectOutputStream os = null;
-//        try {
-//            fileOutputStream = new FileOutputStream(file);
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//        alert.setTitle("Information");
-//        alert.setHeaderText(null);
-//        alert.setContentText("Успешно сохранено!");
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
             oos.writeObject(bank);
             showOkDialog("Успешно сохранено!");
-            //oos.close();
         } catch (IOException e) {
             e.printStackTrace();
-            //alert.setContentText("Что то пошло не так");
             showErrorDialog();
         }
 
     }
     public void loadDB(ActionEvent event) {
-
-//        FileInputStream fileInputStream = null;
-//        try {
-//            fileInputStream = new FileInputStream(file);
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
         try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
-//            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//            alert.setTitle("Information");
-//            alert.setHeaderText(null);
-            //ObjectOutputStream os = new ObjectOutputStream(fileOutputStream);
-
             try {
                 Object obj = ois.readObject();
                 bank = (Bank) obj;
-//                alert.setContentText();
-//                alert.showAndWait();
                 showOkDialog("Успешно загружено!");
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
                 showErrorDialog();
             }
-
-            //ois.close();
         } catch (IOException e) {
             e.printStackTrace();
             showErrorDialog();
         }
-        //alert.showAndWait();
     }
 
     public  void showOkDialog(String contentText) {

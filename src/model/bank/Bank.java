@@ -17,6 +17,16 @@ public class Bank implements Serializable{
         return atm;
     }
 
+    public Client getClient(String surname, String name){
+        Client client = null;
+        for (Client cl: clientsDB){
+            if (cl.getSurname().equals(surname) && cl.getName().equals(name)) {
+                client = cl;
+            }
+        }
+        return client;
+    }
+
     private void addAccount(Client client, BigDecimal bigDecimal) {
         Account account = new Account(bigDecimal);
         accForClientsDB.put(client, account);
