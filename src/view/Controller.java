@@ -2,6 +2,7 @@ package view;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -46,10 +47,25 @@ public class Controller {
     }
 
     public void issueCard(ActionEvent event) {
+        if (surnameTextField.getText().isEmpty() || nameTextField.getText().isEmpty()) {
+            resultTextArea.setText("Ошибка: не указан клиент!");
+            return;
+        }
+        resultTextArea.setText("");
         Client client = new Client(surnameTextField.getText(),nameTextField.getText());
         System.out.printf("Выпустим карту для клиента: %s\n", client);
-        String issueReturn = bank.issueCard(client, new VisaCard(), new BigDecimal(amountTextField.getText()),
-                Integer.parseInt(pinTextField.getText()), Integer.parseInt(cvvTextField.getText()));
+        int amount = 0;
+        int pin = 0;
+        int cvv = 0;
+        if (!amountTextField.getText().isEmpty())
+            amount = Integer.parseInt(amountTextField.getText());
+        if (!pinTextField.getText().isEmpty())
+            pin = Integer.parseInt(pinTextField.getText());
+        if (!cvvTextField.getText().isEmpty())
+            cvv = Integer.parseInt(cvvTextField.getText());
+        String issueReturn = bank.issueCard(client, new VisaCard(), new BigDecimal(amount), pin, cvv);
+//        String issueReturn = bank.issueCard(client, new VisaCard(), new BigDecimal(amountTextField.getText()),
+//                Integer.parseInt(pinTextField.getText()), Integer.parseInt(cvvTextField.getText()));
         surnameTextField.setText("");
         nameTextField.setText("");
         amountTextField.setText("");
@@ -84,42 +100,74 @@ public class Controller {
     }
 
     public void saveDB(ActionEvent event) {
-        FileOutputStream fileOutputStream = null;
+//        FileOutputStream fileOutputStream = null;
         //ObjectOutputStream os = null;
-        try {
-            fileOutputStream = new FileOutputStream(file);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        try {
-            ObjectOutputStream oos = new ObjectOutputStream(fileOutputStream);
+//        try {
+//            fileOutputStream = new FileOutputStream(file);
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//        alert.setTitle("Information");
+//        alert.setHeaderText(null);
+//        alert.setContentText("Успешно сохранено!");
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
             oos.writeObject(bank);
-            oos.close();
+            showOkDialog("Успешно сохранено!");
+            //oos.close();
         } catch (IOException e) {
             e.printStackTrace();
+            //alert.setContentText("Что то пошло не так");
+            showErrorDialog();
         }
+
     }
     public void loadDB(ActionEvent event) {
 
-        FileInputStream fileInputStream = null;
-        try {
-            fileInputStream = new FileInputStream(file);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        try {
+//        FileInputStream fileInputStream = null;
+//        try {
+//            fileInputStream = new FileInputStream(file);
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+        try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
+//            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//            alert.setTitle("Information");
+//            alert.setHeaderText(null);
             //ObjectOutputStream os = new ObjectOutputStream(fileOutputStream);
-            ObjectInputStream ois = new ObjectInputStream(fileInputStream);
+
             try {
                 Object obj = ois.readObject();
                 bank = (Bank) obj;
+//                alert.setContentText();
+//                alert.showAndWait();
+                showOkDialog("Успешно загружено!");
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
+                showErrorDialog();
             }
-            //bank = is.readObject();
-            ois.close();
+
+            //ois.close();
         } catch (IOException e) {
             e.printStackTrace();
+            showErrorDialog();
         }
+        //alert.showAndWait();
+    }
+
+    public  void showOkDialog(String contentText) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Information");
+        alert.setHeaderText(null);
+        alert.setContentText(contentText);
+        alert.showAndWait();
+    }
+
+    public void showErrorDialog(){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error Dialog");
+        alert.setContentText("Что то пошло не так");
+        alert.showAndWait();
     }
 }
+
