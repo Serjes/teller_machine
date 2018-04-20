@@ -37,6 +37,11 @@ public class Bank implements Serializable{
         return card;
     }
 
+    public Account getAccountOfClient(Client client) {
+        //Account account = accForClientsDB.get(client);
+        return  accForClientsDB.get(client);
+    }
+
     public String issueCard(Client client, Card card, BigDecimal bigDecimal, int pin, int cvv) {
         clientsDB.add(client);
         addAccount(client, bigDecimal);

@@ -45,6 +45,15 @@ public class Controller {
     @FXML
     private TextArea resultTextArea;
 
+    @FXML
+    private TextField surnameTextFieldATM;
+    @FXML
+    private TextField nameTextFieldATM;
+    @FXML
+    private Button findButtonATM;
+    @FXML
+    private TextArea resultTextAreaATM;
+
     public Controller() {
     }
 
@@ -54,7 +63,7 @@ public class Controller {
             return;
         }
         resultTextArea.setText("");
-        Client client = new Client(surnameTextField.getText(),nameTextField.getText());
+        Client client = new Client(surnameTextField.getText(), nameTextField.getText());
         System.out.printf("Выпустим карту для клиента: %s\n", client);
         int amount = 0;
         int pin = 0;
@@ -92,7 +101,7 @@ public class Controller {
 
     public void showDateTime(ActionEvent event) {
         System.out.println("Button Clicked!");
-        Date now= new Date();
+        Date now = new Date();
         DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss.SSS");
         // Model Data
         String dateTimeString = df.format(now);
@@ -111,8 +120,9 @@ public class Controller {
         }
 
     }
+
     public void loadDB(ActionEvent event) {
-        try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
             try {
                 Object obj = ois.readObject();
                 bank = (Bank) obj;
@@ -127,7 +137,7 @@ public class Controller {
         }
     }
 
-    public  void showOkDialog(String contentText) {
+    public void showOkDialog(String contentText) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information");
         alert.setHeaderText(null);
@@ -135,11 +145,25 @@ public class Controller {
         alert.showAndWait();
     }
 
-    public void showErrorDialog(){
+    public void showErrorDialog() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error Dialog");
         alert.setContentText("Что то пошло не так");
         alert.showAndWait();
+    }
+
+    public void findCardATM(ActionEvent event) {
+        //resultTextAreaATM.setText("");
+        if (surnameTextFieldATM.getText().isEmpty() || nameTextFieldATM.getText().isEmpty()) {
+            resultTextAreaATM.setText("Ошибка: не указан клиент!");
+            return;
+        }
+        Client client = bank.getClient(surnameTextFieldATM.getText(),nameTextFieldATM.getText());
+        resultTextAreaATM.setText(client.toString() + "\n");
+        Card currentCard = bank.getCardOfClient(client);
+        resultTextAreaATM.appendText(currentCard.getDescription() + "\n");
+        //getAccountOfClient
+        resultTextAreaATM.appendText("номер счета: " + bank.getAccountOfClient(client) + "\n");
     }
 }
 
