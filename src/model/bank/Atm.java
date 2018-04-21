@@ -26,25 +26,29 @@ public class Atm implements Serializable{
         return false;
     }
 
-    public void insertCard(Card card) {
+    public boolean insertCard(Card card) {
         if (currentCard == null) {
             currentCard = card;
-            System.out.println("ATM: Вставили карту " + card.getDescription() + ", account: " + card.getAccount());
+            //System.out.println("ATM: Вставили карту " + card.getDescription() + ", account: " + card.getAccount());
+            return true;
         } else {
-            System.out.println("Уже вставлена карта");
+            //System.out.println("Уже вставлена карта");
+            return false;
         }
     }
 
-    public void showBalance() {
+    public String showBalance() {
         System.out.println("ATM: Проверка баланса");
         if (currentCard == null) {
             System.out.println("ATM: Ошибка, вставьте карту");
+            return null;
         } else {
-            if (checkPin()) {
-                System.out.println("ATM: Balance: " + currentCard.getAccount().getBalance().setScale(2).toString());
-            } else {
-                System.out.println("ATM: Неверный pin");
-            }
+//            if (checkPin()) {
+//                System.out.println("ATM: Balance: " + currentCard.getAccount().getBalance().setScale(2).toString());
+//            } else {
+//                System.out.println("ATM: Неверный pin");
+//            }
+            return currentCard.getAccount().getBalance().setScale(2).toString();
 
         }
     }

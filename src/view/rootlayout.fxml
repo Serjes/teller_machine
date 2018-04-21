@@ -77,10 +77,10 @@
                         <TextField fx:id="surnameTextFieldATM" layoutX="40.0" layoutY="102.0" prefHeight="25.0" prefWidth="170.0" />
                         <TextField fx:id="nameTextFieldATM" layoutX="220.0" layoutY="102.0" prefHeight="25.0" prefWidth="170.0" />
                         <Label layoutX="36.0" layoutY="71.0" prefHeight="17.0" prefWidth="344.0" text="Введите фамилию и имя для поиска карты:" />
-                        <Button layoutX="219.0" layoutY="273.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="170.0" text="Вставить текущую карту" />
+                        <Button layoutX="219.0" layoutY="273.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="170.0" onAction="#insertCardATM" text="Вставить текущую карту" />
                         <TextArea fx:id="resultTextAreaATM" layoutX="439.0" layoutY="71.0" prefHeight="368.0" prefWidth="303.0" />
-                        <Button fx:id="findButtonATM" layoutX="219.0" layoutY="154.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="170.0"  onAction="#findCardATM" text="Поиск карты" />
-                        <Button layoutX="220.0" layoutY="328.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="170.0" text="Баланс карты" />
+                        <Button fx:id="findButtonATM" layoutX="219.0" layoutY="154.0" mnemonicParsing="false" onAction="#findCardATM" prefHeight="25.0" prefWidth="170.0" text="Поиск карты" />
+                        <Button layoutX="220.0" layoutY="328.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="170.0" onAction="#showBalanceATM" text="Баланс карты" />
                         <Button layoutX="220.0" layoutY="392.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="170.0" text="Снять" />
                         <TextField layoutX="40.0" layoutY="392.0" prefHeight="25.0" prefWidth="170.0" />
                         <Label layoutX="40.0" layoutY="366.0" prefHeight="17.0" prefWidth="171.0" text="Введите сумму:" />

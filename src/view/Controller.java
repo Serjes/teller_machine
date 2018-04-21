@@ -2,10 +2,7 @@ package view;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import model.bank.Atm;
 import model.bank.Bank;
 import model.bank.Client;
@@ -16,11 +13,13 @@ import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Optional;
 
 public class Controller {
     Bank bank = new Bank();
     Atm atm = bank.getAtm();
     File file = new File("bankDB.txt");
+    Card currentCardATM;
 
     @FXML
     private Button issueButton;
@@ -116,7 +115,7 @@ public class Controller {
             showOkDialog("Успешно сохранено!");
         } catch (IOException e) {
             e.printStackTrace();
-            showErrorDialog();
+            showErrorDialog("Что то пошло не так: IO error");
         }
 
     }
@@ -129,11 +128,11 @@ public class Controller {
                 showOkDialog("Успешно загружено!");
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
-                showErrorDialog();
+                showErrorDialog("Что то пошло не так: NotFound");
             }
         } catch (IOException e) {
             e.printStackTrace();
-            showErrorDialog();
+            showErrorDialog("Что то пошло не так: IO error");
         }
     }
 
@@ -145,10 +144,10 @@ public class Controller {
         alert.showAndWait();
     }
 
-    public void showErrorDialog() {
+    public void showErrorDialog(String contentText) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error Dialog");
-        alert.setContentText("Что то пошло не так");
+        alert.setContentText(contentText);
         alert.showAndWait();
     }
 
@@ -160,10 +159,47 @@ public class Controller {
         }
         Client client = bank.getClient(surnameTextFieldATM.getText(),nameTextFieldATM.getText());
         resultTextAreaATM.setText(client.toString() + "\n");
-        Card currentCard = bank.getCardOfClient(client);
-        resultTextAreaATM.appendText(currentCard.getDescription() + "\n");
+        //Card currentCard = bank.getCardOfClient(client);
+        currentCardATM = bank.getCardOfClient(client);
+        resultTextAreaATM.appendText(currentCardATM.getDescription() + "\n");
         //getAccountOfClient
         resultTextAreaATM.appendText("номер счета: " + bank.getAccountOfClient(client) + "\n");
+    }
+
+    public void insertCardATM(ActionEvent event) {
+        if (currentCardATM != null) {
+            if (atm.insertCard(currentCardATM)) {
+                resultTextAreaATM.setText("Карта вставлена, " + currentCardATM.getDescription() + "\n");
+            } else {
+                resultTextAreaATM.setText("Ошибка: уже вставлена\n" );
+            }
+        }
+        else resultTextAreaATM.setText("Ошибка: нет карты\n");
+    }
+
+    public void showBalanceATM(ActionEvent event) {
+        if (checkPin()) {
+            resultTextAreaATM.appendText("Баланс карты: \n");
+            resultTextAreaATM.appendText(atm.showBalance());
+        } else {
+            resultTextAreaATM.setText("Неверный pin \n");
+        }
+    }
+
+    public boolean checkPin() {
+        TextInputDialog dialog = new TextInputDialog("0000");
+        dialog.setTitle("PIN Input Dialog");
+        dialog.setHeaderText("PIN");
+        dialog.setContentText("Please enter pin-code:");
+
+        // Traditional way to get the response value.
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()){
+            //System.out.println("Your name: " + result.get());
+            int pin = Integer.parseInt(result.get());
+            if (currentCardATM.checkPin(pin)) return true;
+        }
+        return false;
     }
 }
 
