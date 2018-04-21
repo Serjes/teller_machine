@@ -52,6 +52,8 @@ public class Controller {
     private Button findButtonATM;
     @FXML
     private TextArea resultTextAreaATM;
+    @FXML
+    private TextField amountTextFieldATM;
 
     public Controller() {
     }
@@ -200,6 +202,16 @@ public class Controller {
             if (currentCardATM.checkPin(pin)) return true;
         }
         return false;
+    }
+
+    public void withdrawCashATM(ActionEvent event) {
+        if (checkPin()) {
+            resultTextAreaATM.appendText("Снятие наличных: \n" + amountTextFieldATM.getText());
+            //resultTextAreaATM.appendText(atm.withdrawCash(new BigDecimal(Integer.parseInt(amountTextFieldATM.getText()))));
+            atm.withdrawCash(new BigDecimal(Integer.parseInt(amountTextFieldATM.getText())));
+        } else {
+            resultTextAreaATM.setText("Неверный pin \n");
+        }
     }
 }
 

@@ -53,16 +53,19 @@ public class Atm implements Serializable{
         }
     }
 
-    public void withdrawCash(BigDecimal amount) {
+    public String withdrawCash(BigDecimal amount) {
         System.out.println("ATM: Снятие наличных");
         if (currentCard == null) {
             System.out.println("ATM: Ошибка, вставьте карту");
+            return null;
         } else {
-            if (checkPin()) {
-                currentCard.withdraw(amount);
-            } else {
-                System.out.println("ATM: Неверный pin");
-            }
+//            if (checkPin()) {
+//                currentCard.withdraw(amount);
+//            } else {
+//                System.out.println("ATM: Неверный pin");
+//            }
+            currentCard.withdraw(amount);
+            return null;
         }
     }
 
