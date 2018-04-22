@@ -64,6 +64,7 @@ public class Bank implements Serializable{
 
     public String printClients() {
         //System.out.println(clientsDB);
-        return clientsDB.toString();
+        if (clientsDB.isEmpty()) return null;
+        else return clientsDB.toString();
     }
 }

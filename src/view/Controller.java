@@ -1,5 +1,7 @@
 package view;
 
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -91,7 +93,12 @@ public class Controller {
 
     public void printClients(ActionEvent actionEvent) {
         outputTextArea.appendText("\n");
-        outputTextArea.appendText(bank.printClients() + "\n");
+        String retString = bank.printClients();
+        if (retString != null) {
+            outputTextArea.appendText(retString + "\n");
+        } else {
+            outputTextArea.setText("Пустая БД клиентов\n");
+        }
         //outputTextArea.setText("привет!");
     }
 
@@ -104,53 +111,7 @@ public class Controller {
         System.out.println("Button Clicked!");
         Date now = new Date();
         DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss.SSS");
-        // Model Data
         String dateTimeString = df.format(now);
-        // Show in VIEW
-        //myTextField.setText(dateTimeString);
-
-    }
-
-    public void saveDB(ActionEvent event) {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
-            oos.writeObject(bank);
-            showOkDialog("Успешно сохранено!");
-        } catch (IOException e) {
-            e.printStackTrace();
-            showErrorDialog("Что то пошло не так: IO error");
-        }
-
-    }
-
-    public void loadDB(ActionEvent event) {
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
-            try {
-                Object obj = ois.readObject();
-                bank = (Bank) obj;
-                showOkDialog("Успешно загружено!");
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-                showErrorDialog("Что то пошло не так: NotFound");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            showErrorDialog("Что то пошло не так: IO error");
-        }
-    }
-
-    public void showOkDialog(String contentText) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Information");
-        alert.setHeaderText(null);
-        alert.setContentText(contentText);
-        alert.showAndWait();
-    }
-
-    public void showErrorDialog(String contentText) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error Dialog");
-        alert.setContentText(contentText);
-        alert.showAndWait();
     }
 
     public void findCardATM(ActionEvent event) {
@@ -213,5 +174,141 @@ public class Controller {
             resultTextAreaATM.setText("Неверный pin \n");
         }
     }
+
+    public void exitApp(ActionEvent event) {
+        System.exit(0);
+    }
+
+    public void showOkDialog(String contentText) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Information");
+        alert.setHeaderText(null);
+        alert.setContentText(contentText);
+        alert.showAndWait();
+    }
+
+    public void showErrorDialog(String contentText) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error Dialog");
+        alert.setContentText(contentText);
+        alert.showAndWait();
+    }
+
+    public void saveDB(ActionEvent event) {
+//        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
+//            oos.writeObject(bank);
+//            showOkDialog("Успешно сохранено!");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            showErrorDialog("Что то пошло не так: IO error");
+//        }
+
+//        SaverDB saver = new SaverDB();
+//        new Thread(saver).start();
+
+//        Platform.runLater(new Runnable() {
+//            @Override
+//            public void run() {
+//                try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
+//                    oos.writeObject(bank);
+//                    Thread.sleep(5000);
+//                    showOkDialog("Успешно сохранено!");
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                    showErrorDialog("Что то пошло не так: IO error");
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
+        Task task = new Task<Void>() {
+            @Override public Void call() {
+                try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
+                    oos.writeObject(bank);
+                    Thread.sleep(5000);
+                    System.out.println("Успешно сохранено!");
+                    showOkDialog("Успешно сохранено!");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    showErrorDialog("Что то пошло не так: IO error");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+//            public void showOkDialog(String contentText) {
+//                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//                alert.setTitle("Information");
+//                alert.setHeaderText(null);
+//                alert.setContentText(contentText);
+//                alert.showAndWait();
+//            }
+//
+//            public void showErrorDialog(String contentText) {
+//                Alert alert = new Alert(Alert.AlertType.ERROR);
+//                alert.setTitle("Error Dialog");
+//                alert.setContentText(contentText);
+//                alert.showAndWait();
+//            }
+        };
+        new Thread(task).start();
+    }
+
+    public void loadDB(ActionEvent event) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
+            try {
+                Object obj = ois.readObject();
+                bank = (Bank) obj;
+                showOkDialog("Успешно загружено!");
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+                showErrorDialog("Что то пошло не так: NotFound");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            showErrorDialog("Что то пошло не так: IO error");
+        }
+    }
+
+    public void deleteDB(ActionEvent event) {
+        if(file.delete()){
+            showOkDialog("БД успешно очищена!");
+        }else {
+            showErrorDialog("Файла БД нет");
+        }
+    }
+
+//    class SaverDB implements Runnable {
+//
+//        @Override
+//        public void run() {
+//            try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
+//                oos.writeObject(bank);
+//                Thread.sleep(1000);
+//                showOkDialog("Успешно сохранено!");
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//                showErrorDialog("Что то пошло не так: IO error");
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        void showOkDialog(String contentText) {
+//            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//            alert.setTitle("Information");
+//            alert.setHeaderText(null);
+//            alert.setContentText(contentText);
+//            alert.showAndWait();
+//        }
+//
+//        public void showErrorDialog(String contentText) {
+//            Alert alert = new Alert(Alert.AlertType.ERROR);
+//            alert.setTitle("Error Dialog");
+//            alert.setContentText(contentText);
+//            alert.showAndWait();
+//        }
+//    }
 }
 

@@ -22,8 +22,8 @@
             <items>
               <MenuItem mnemonicParsing="false" onAction="#saveDB" text="Сохранить БД" />
                   <MenuItem mnemonicParsing="false" onAction="#loadDB" text="Загрузить БД" />
-                  <MenuItem mnemonicParsing="false" text="Очистить БД" />
-                  <MenuItem mnemonicParsing="false" text="Закрыть" />
+                  <MenuItem mnemonicParsing="false" onAction="#deleteDB" text="Очистить БД" />
+                  <MenuItem mnemonicParsing="false" onAction="#exitApp" text="Закрыть" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
