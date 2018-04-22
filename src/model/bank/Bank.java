@@ -38,7 +38,6 @@ public class Bank implements Serializable{
     }
 
     public Account getAccountOfClient(Client client) {
-        //Account account = accForClientsDB.get(client);
         return  accForClientsDB.get(client);
     }
 
@@ -52,18 +51,15 @@ public class Bank implements Serializable{
         Calendar calendar = Calendar.getInstance();
         calendar.roll(calendar.YEAR, 1);
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-        //System.out.println("(срок действия карты до " + sdf.format(calendar.getTime()) + ")");
         card.setExpDate(calendar);
         return "(срок действия карты до " + sdf.format(calendar.getTime()) + ")";
     }
 
     public String printAccounts(){
-        //System.out.println(accForClientsDB.values());
         return accForClientsDB.values().toString();
     }
 
     public String printClients() {
-        //System.out.println(clientsDB);
         if (clientsDB.isEmpty()) return null;
         else return clientsDB.toString();
     }

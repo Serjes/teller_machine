@@ -78,8 +78,6 @@ public class Controller {
         if (!cvvTextField.getText().isEmpty())
             cvv = Integer.parseInt(cvvTextField.getText());
         String issueReturn = bank.issueCard(client, new VisaCard(), new BigDecimal(amount), pin, cvv);
-//        String issueReturn = bank.issueCard(client, new VisaCard(), new BigDecimal(amountTextField.getText()),
-//                Integer.parseInt(pinTextField.getText()), Integer.parseInt(cvvTextField.getText()));
         surnameTextField.setText("");
         nameTextField.setText("");
         amountTextField.setText("");
@@ -115,17 +113,14 @@ public class Controller {
     }
 
     public void findCardATM(ActionEvent event) {
-        //resultTextAreaATM.setText("");
         if (surnameTextFieldATM.getText().isEmpty() || nameTextFieldATM.getText().isEmpty()) {
             resultTextAreaATM.setText("Ошибка: не указан клиент!");
             return;
         }
         Client client = bank.getClient(surnameTextFieldATM.getText(),nameTextFieldATM.getText());
         resultTextAreaATM.setText(client.toString() + "\n");
-        //Card currentCard = bank.getCardOfClient(client);
         currentCardATM = bank.getCardOfClient(client);
         resultTextAreaATM.appendText(currentCardATM.getDescription() + "\n");
-        //getAccountOfClient
         resultTextAreaATM.appendText("номер счета: " + bank.getAccountOfClient(client) + "\n");
     }
 
@@ -195,14 +190,6 @@ public class Controller {
     }
 
     public void saveDB(ActionEvent event) {
-//        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
-//            oos.writeObject(bank);
-//            showOkDialog("Успешно сохранено!");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            showErrorDialog("Что то пошло не так: IO error");
-//        }
-
 //        SaverDB saver = new SaverDB();
 //        new Thread(saver).start();
 
@@ -236,21 +223,6 @@ public class Controller {
                 }
                 return null;
             }
-
-//            public void showOkDialog(String contentText) {
-//                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//                alert.setTitle("Information");
-//                alert.setHeaderText(null);
-//                alert.setContentText(contentText);
-//                alert.showAndWait();
-//            }
-//
-//            public void showErrorDialog(String contentText) {
-//                Alert alert = new Alert(Alert.AlertType.ERROR);
-//                alert.setTitle("Error Dialog");
-//                alert.setContentText(contentText);
-//                alert.showAndWait();
-//            }
         };
         new Thread(task).start();
     }
@@ -278,37 +250,5 @@ public class Controller {
             showErrorDialog("Файла БД нет");
         }
     }
-
-//    class SaverDB implements Runnable {
-//
-//        @Override
-//        public void run() {
-//            try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
-//                oos.writeObject(bank);
-//                Thread.sleep(1000);
-//                showOkDialog("Успешно сохранено!");
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//                showErrorDialog("Что то пошло не так: IO error");
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//
-//        void showOkDialog(String contentText) {
-//            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//            alert.setTitle("Information");
-//            alert.setHeaderText(null);
-//            alert.setContentText(contentText);
-//            alert.showAndWait();
-//        }
-//
-//        public void showErrorDialog(String contentText) {
-//            Alert alert = new Alert(Alert.AlertType.ERROR);
-//            alert.setTitle("Error Dialog");
-//            alert.setContentText(contentText);
-//            alert.showAndWait();
-//        }
-//    }
 }
 

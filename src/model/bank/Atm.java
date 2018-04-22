@@ -29,10 +29,8 @@ public class Atm implements Serializable{
     public boolean insertCard(Card card) {
         if (currentCard == null) {
             currentCard = card;
-            //System.out.println("ATM: Вставили карту " + card.getDescription() + ", account: " + card.getAccount());
             return true;
         } else {
-            //System.out.println("Уже вставлена карта");
             return false;
         }
     }
@@ -43,11 +41,6 @@ public class Atm implements Serializable{
             System.out.println("ATM: Ошибка, вставьте карту");
             return null;
         } else {
-//            if (checkPin()) {
-//                System.out.println("ATM: Balance: " + currentCard.getAccount().getBalance().setScale(2).toString());
-//            } else {
-//                System.out.println("ATM: Неверный pin");
-//            }
             return currentCard.getAccount().getBalance().setScale(2).toString();
 
         }
@@ -59,11 +52,6 @@ public class Atm implements Serializable{
             System.out.println("ATM: Ошибка, вставьте карту");
             return null;
         } else {
-//            if (checkPin()) {
-//                currentCard.withdraw(amount);
-//            } else {
-//                System.out.println("ATM: Неверный pin");
-//            }
             currentCard.withdraw(amount);
             return null;
         }
